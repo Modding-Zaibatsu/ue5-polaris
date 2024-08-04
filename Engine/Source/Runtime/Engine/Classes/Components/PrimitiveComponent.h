@@ -435,6 +435,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PathTracing, Interp)
 	uint8 bHoldout : 1;
 
+	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadOnly, Category = Rendering)
+	uint8 bBehindGUI : 1;
+
 	/** If this is True, this component won't be visible when the view actor is the component's owner, directly or indirectly. */
 	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadOnly, Category = Rendering)
 	uint8 bOwnerNoSee:1;
@@ -884,6 +887,9 @@ protected:
 	static FThreadSafeCounter NextRegistrationSerialNumber;
 
 public:
+	UPROPERTY(EditAnywhere, AdvancedDisplay, Category = Rendering)
+	float LpvBiasMultiplier;
+
 	/** 
 	 * Scales the bounds of the object.
 	 * This is useful when using World Position Offset to animate the vertices of the object outside of its bounds. 
