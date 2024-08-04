@@ -263,6 +263,9 @@ private:
 	UPROPERTY(Interp, EditAnywhere, Category=Rendering, BlueprintReadOnly, Replicated, meta=(AllowPrivateAccess="true", DisplayName="Actor Hidden In Game", SequencerTrackClass="/Script/MovieSceneTracks.MovieSceneVisibilityTrack"))
 	uint8 bHidden:1;
 
+	UPROPERTY(Interp, EditAnywhere, Category = Rendering, BlueprintReadOnly, Replicated, meta = (AllowPrivateAccess = "true", DisplayName = "Actor Hidden In Game (Polaris)", SequencerTrackClass = "/Script/MovieSceneTracks.MovieSceneVisibilityTrack"))
+	uint8 bHidden_Polaris : 1;
+
 	UPROPERTY(Replicated)
 	uint8 bTearOff:1;
 
@@ -495,6 +498,18 @@ private:
 	/** Set when actor is about to be deleted. Needs to be a FProperty so it is included in transactions. */
 	UPROPERTY(Transient, DuplicateTransient)
 	uint8 bActorIsBeingDestroyed:1;
+
+	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
+	uint8 bDisableScalabilityLow : 1;
+
+	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
+	uint8 bDisableScalabilityMedium : 1;
+
+	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
+	uint8 bDisableScalabilityHigh : 1;
+
+	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
+	uint8 bDisableScalabilityDebug : 1;
 
 	/** Set if an Actor tries to be destroyed while it is beginning play so that once BeginPlay ends we can issue the destroy call. */
 	uint8 bActorWantsDestroyDuringBeginPlay : 1;
