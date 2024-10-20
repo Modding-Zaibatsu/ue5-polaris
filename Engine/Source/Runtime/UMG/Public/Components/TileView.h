@@ -82,6 +82,9 @@ protected:
 	/** True to allow left/right navigation to wrap back to the tile on the opposite edge */
 	UPROPERTY(EditAnywhere, Category = Navigation)
 	bool bWrapHorizontalNavigation = false;
+	
+	UPROPERTY(EditAnywhere, Category = Polaris)
+	bool bIsIgnoreNavigation = false;
 
 	TSharedPtr<STileView<UObject*>> MyTileView;
 };

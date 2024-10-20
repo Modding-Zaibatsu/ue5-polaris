@@ -47,6 +47,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = PrimaryAssetLabel)
 	FCollectionReference AssetCollection;
 
+	UPROPERTY(EditAnywhere, Category = PrimaryAssetLabel)
+	TArray<FDirectoryPath> ExplicitDirectories;
+
+	UPROPERTY(EditAnywhere, Category = PrimaryAssetLabel)
+	TArray<FDirectoryPath> ExcludeDirectories;
+
 	/** Set to editor only if this is not available in a cooked build */
 	virtual bool IsEditorOnly() const
 	{

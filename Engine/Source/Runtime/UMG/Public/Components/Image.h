@@ -56,6 +56,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Getter = "ShouldFlipForRightToLeftFlowDirection", Setter = "SetFlipForRightToLeftFlowDirection", Category = "Localization")
 	bool bFlipForRightToLeftFlowDirection;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Polaris")
+	bool bNoGamma;
+
 public:
 
 	UPROPERTY(EditAnywhere, Category=Events, meta=( IsBindableEvent="True" ))

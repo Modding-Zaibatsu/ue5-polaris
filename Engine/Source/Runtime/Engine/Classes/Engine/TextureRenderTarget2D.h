@@ -138,6 +138,9 @@ class UTextureRenderTarget2D : public UTextureRenderTarget
 	/** Normally the format is derived from RenderTargetFormat, this allows code to set the format explicitly. */
 	UPROPERTY()
 	TEnumAsByte<enum EPixelFormat> OverrideFormat;
+	
+	UPROPERTY()
+	int32 NumMips;
 
 	/**
 	 * Initialize the settings needed to create a render target texture
@@ -247,7 +250,7 @@ class UTextureRenderTarget2D : public UTextureRenderTarget
 	}
 
 private:
-	int32	NumMips;
+	//int32	NumMips;//
 };
 
 

@@ -53,7 +53,8 @@ struct FMovieSceneSequencePlaybackSettings
 		, bPauseAtEnd(false)
 		, bInheritTickIntervalFromOwner(true)
 		, bDynamicWeighting(false)
-	{ }
+		, LoopPoint(0,0)
+	{}
 
 	GENERATED_BODY()
 
@@ -116,6 +117,9 @@ struct FMovieSceneSequencePlaybackSettings
 	/** Whether to enable dynamic weighting on this player or not */
 	UPROPERTY(EditAnywhere, Category="Playback")
 	uint32 bDynamicWeighting : 1;
+
+	UPROPERTY(EditAnywhere, Category="Polaris")
+	FVector2D LoopPoint;
 
 	MOVIESCENE_API bool SerializeFromMismatchedTag(const FPropertyTag& Tag, FStructuredArchive::FSlot Slot);
 };

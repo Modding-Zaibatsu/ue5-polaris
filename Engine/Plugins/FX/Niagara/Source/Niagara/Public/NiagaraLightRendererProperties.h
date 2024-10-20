@@ -122,6 +122,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Bindings")
 	FNiagaraVariableAttributeBinding RendererVisibilityTagBinding;
 
+	UPROPERTY(EditAnywhere, Category = "Polaris")
+	FNiagaraVariableAttributeBinding LightScale;
+	
 	FNiagaraDataSetAccessor<FNiagaraPosition> PositionDataSetAccessor;
 	FNiagaraDataSetAccessor<FLinearColor> ColorDataSetAccessor;
 	FNiagaraDataSetAccessor<float> RadiusDataSetAccessor;

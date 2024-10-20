@@ -4635,6 +4635,15 @@ void AActor::SetActorHiddenInGame( bool bNewHidden )
 	}
 }
 
+void AActor::SetActorHiddenInGame_Polaris( bool bNewHidden )
+{
+	if (IsHidden() != bNewHidden)
+	{
+		SetHidden(bNewHidden);
+		MarkComponentsRenderStateDirty();
+	}
+}
+
 void AActor::SetActorEnableCollision(bool bNewActorEnableCollision)
 {
 	if(bActorEnableCollision != bNewActorEnableCollision)

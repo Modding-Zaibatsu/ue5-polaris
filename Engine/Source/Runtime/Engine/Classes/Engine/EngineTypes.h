@@ -495,6 +495,11 @@ enum ESceneCaptureSource : int
 	SCS_BaseColor UMETA(DisplayName = "BaseColor in RGB (Deferred Renderer only)"),
 	SCS_FinalColorHDR UMETA(DisplayName = "Final Color (HDR) in Linear Working Color Space"),
 	SCS_FinalToneCurveHDR UMETA(DisplayName = "Final Color (with tone curve) in Linear sRGB gamut"),
+	SCS_CustomSceneDepth UMETA(DisplayName = "Polaris - Custom Scene Depth"),
+	SCS_CustomDeviceDepth UMETA(DisplayName = "Polaris - Custom Device Depth"),
+	SCS_CustomStencil UMETA(DisplayName = "Polaris - Custom Stencil"),
+	SCS_AfterDOFSceneColorHDR UMETA(DisplayName = "Polaris - After DOF Scene Color HDR"),
+	SCS_AfterDOFSceneColorHDRNoAlpha UMETA(DisplayName = "Polaris - After DOF Scene Color HDR No Alpha"),
 
 	SCS_MAX
 };
@@ -615,6 +620,7 @@ enum EMaterialShadingModel : int
 	MSM_SingleLayerWater		UMETA(DisplayName="SingleLayerWater"),
 	MSM_ThinTranslucent			UMETA(DisplayName="Thin Translucent"),
 	MSM_Strata					UMETA(DisplayName="Substrate", Hidden),
+	MSM_Anisotropy				UMETA(DisplayName="Anisotropy"),
 	/** Number of unique shading models. */
 	MSM_NUM						UMETA(Hidden),
 	/** Shading model will be determined by the Material Expression Graph,
@@ -827,6 +833,7 @@ enum EMaterialShadingRate : int
 	MSR_4x2				UMETA(DisplayName = "4x2"),
 	MSR_2x4				UMETA(DisplayName = "2x4"),
 	MSR_4x4				UMETA(DisplayName = "4x4"),
+	MSR_Disabled		UMETA(DisplayName = "Disabled"),
 	MSR_Count			UMETA(Hidden),
 };
 

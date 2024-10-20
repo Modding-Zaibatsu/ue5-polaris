@@ -23,7 +23,7 @@ UCLASS(NotBlueprintable)
 class UNiagaraCullProxyComponent : public UNiagaraComponent
 {
 	GENERATED_UCLASS_BODY()
-
+	
 	/** Array of additional instance transforms. This component will be rendered at it's own transform and additionally at each of these transforms. */
 	UPROPERTY(EditAnywhere, Category = "Niagara")
 	TArray<FNiagaraCulledComponentInfo> Instances;

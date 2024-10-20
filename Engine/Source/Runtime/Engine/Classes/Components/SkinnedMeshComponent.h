@@ -595,6 +595,15 @@ public:
 	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category = SkeletalMesh)
 	uint8 bUseBoundsFromLeaderPoseComponent : 1;
 
+	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category = Polaris)
+	uint8 bForceUseBoundsFromLeaderPoseComponent : 1;
+
+	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category = Polaris)
+	uint8 bForceUsePhysicsAssetBounds : 1;
+	
+	UPROPERTY(EditAnywhere, AdvancedDisplay, BlueprintReadWrite, Category = Polaris)
+	TArray<TObjectPtr<USceneComponent>> AdditionalBoundsComponentArray;
+
 #if WITH_EDITORONLY_DATA
 	UE_DEPRECATED(5.1, "This property is deprecated. Please use bUseBoundsFromLeaderPoseComponent instead")
 	uint8 bUseBoundsFromMasterPoseComponent : 1;

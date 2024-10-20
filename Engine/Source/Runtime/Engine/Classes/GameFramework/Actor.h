@@ -263,7 +263,7 @@ private:
 	UPROPERTY(Interp, EditAnywhere, Category=Rendering, BlueprintReadOnly, Replicated, meta=(AllowPrivateAccess="true", DisplayName="Actor Hidden In Game", SequencerTrackClass="/Script/MovieSceneTracks.MovieSceneVisibilityTrack"))
 	uint8 bHidden:1;
 
-	UPROPERTY(Interp, EditAnywhere, Category = Rendering, BlueprintReadOnly, Replicated, meta = (AllowPrivateAccess = "true", DisplayName = "Actor Hidden In Game (Polaris)", SequencerTrackClass = "/Script/MovieSceneTracks.MovieSceneVisibilityTrack"))
+	UPROPERTY(EditAnywhere, Category = Polaris, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Actor Hidden In Game (Polaris)"))
 	uint8 bHidden_Polaris : 1;
 
 	UPROPERTY(Replicated)
@@ -499,18 +499,6 @@ private:
 	UPROPERTY(Transient, DuplicateTransient)
 	uint8 bActorIsBeingDestroyed:1;
 
-	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
-	uint8 bDisableScalabilityLow : 1;
-
-	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
-	uint8 bDisableScalabilityMedium : 1;
-
-	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
-	uint8 bDisableScalabilityHigh : 1;
-
-	UPROPERTY(Interp, EditAnywhere, Category = Rendering)
-	uint8 bDisableScalabilityDebug : 1;
-
 	/** Set if an Actor tries to be destroyed while it is beginning play so that once BeginPlay ends we can issue the destroy call. */
 	uint8 bActorWantsDestroyDuringBeginPlay : 1;
 
@@ -533,6 +521,18 @@ private:
 
 	static uint32 BeginPlayCallDepth;
 
+	UPROPERTY(EditInstanceOnly, Category = Polaris)
+	uint8 bDisableScalabilityLow : 1;
+
+	UPROPERTY(EditInstanceOnly, Category = Polaris)
+	uint8 bDisableScalabilityMedium : 1;
+
+	UPROPERTY(EditInstanceOnly, Category = Polaris)
+	uint8 bDisableScalabilityHigh : 1;
+
+	UPROPERTY(EditInstanceOnly, AdvancedDisplay, Category = Polaris)
+	uint8 bDisableScalabilityDebug : 1;
+	
 protected:
 		
 	/** Whether to use use the async physics tick with this actor. */
@@ -1646,6 +1646,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category="Rendering", meta=( DisplayName = "Set Actor Hidden In Game", Keywords = "Visible Hidden Show Hide" ))
 	virtual void SetActorHiddenInGame(bool bNewHidden);
+
+	UFUNCTION(BlueprintCallable, Category="Polaris")
+	virtual void SetActorHiddenInGame_Polaris(bool bNewHidden);
 
 	/** Allows enabling/disabling collision for the whole actor */
 	UFUNCTION(BlueprintCallable, Category="Collision")

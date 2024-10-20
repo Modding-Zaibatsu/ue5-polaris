@@ -848,6 +848,9 @@ public:
 	* */
 	int32 RegistrationSerialNumber = -1;
 
+	UPROPERTY(EditAnywhere, AdvancedDisplay, Category=Polaris)
+	float LpvBiasMultiplier;
+	
 	/**
 	* Incremented by the main thread before being attached to the scene, decremented
 	* by the rendering thread after removal. This counter exists to assert that 
@@ -887,8 +890,6 @@ protected:
 	static FThreadSafeCounter NextRegistrationSerialNumber;
 
 public:
-	UPROPERTY(EditAnywhere, AdvancedDisplay, Category = Rendering)
-	float LpvBiasMultiplier;
 
 	/** 
 	 * Scales the bounds of the object.

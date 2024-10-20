@@ -34,7 +34,8 @@ class FNiagaraSystemSimulation;
 class FNiagaraGpuComputeDispatchInterface;
 enum class ENCPoolMethod : uint8;
 using FNiagaraSystemInstanceControllerPtr = TSharedPtr<FNiagaraSystemInstanceController, ESPMode::ThreadSafe>;
-using FNiagaraSystemInstanceControllerConstPtr = TSharedPtr<const FNiagaraSystemInstanceController, ESPMode::ThreadSafe>;
+using FNiagaraSystemInstanceControllerConstPtr = TSharedPtr<const FNiagaraSystemInstanceController, ESPMode::ThreadSafe>
+;
 
 // Called when the particle system is done
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNiagaraSystemFinished, class UNiagaraComponent*, PSystem);
@@ -44,19 +45,19 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNiagaraSystemFinished, class UNia
 * @see ANiagaraActor
 * @see UNiagaraSystem
 */
-UCLASS(ClassGroup = (Rendering, Common), Blueprintable, hidecategories = Object, hidecategories = Physics, hidecategories = Collision, showcategories = Trigger, editinlinenew, meta = (BlueprintSpawnableComponent, DisplayName = "Niagara Particle System Component"))
+UCLASS(ClassGroup = (Rendering, Common), Blueprintable, hidecategories = Object, hidecategories = Physics,
+	hidecategories = Collision, showcategories = Trigger, editinlinenew,
+	meta = (BlueprintSpawnableComponent, DisplayName = "Niagara Particle System Component"))
 class NIAGARA_API UNiagaraComponent : public UFXSystemComponent
 {
 	friend struct FNiagaraScalabilityManager;
 	GENERATED_UCLASS_BODY()
-
 #if WITH_EDITORONLY_DATA
 	DECLARE_MULTICAST_DELEGATE(FOnSystemInstanceChanged);
 	DECLARE_MULTICAST_DELEGATE(FOnSynchronizedWithAssetParameters);
 #endif
 
 public:
-
 	/********* UFXSystemComponent *********/
 	void SetBoolParameter(FName ParameterName, bool Param) override;
 	void SetIntParameter(FName ParameterName, int Param) override;
@@ -122,13 +123,14 @@ private:
 	/** When true then this instance will override the system's warmup settings. */
 	UPROPERTY(EditAnywhere, Category = Warmup)
 	uint32 bOverrideWarmupSettings : 1;
-	
+
 	/** Number of ticks to process for warmup of the system. Total warmup time is WarmupTickCount * WarmupTickDelta. */
 	UPROPERTY(EditAnywhere, Category = Warmup, meta=(EditCondition="bOverrideWarmupSettings", ClampMin = "0"))
 	int32 WarmupTickCount = 0;
 
 	/** Delta time used when ticking the system in warmup mode. */
-	UPROPERTY(EditAnywhere, Category = Warmup, meta = (EditCondition="bOverrideWarmupSettings", ForceUnits=s, UIMin = "0.01", UIMax = "1"))
+	UPROPERTY(EditAnywhere, Category = Warmup,
+		meta = (EditCondition="bOverrideWarmupSettings", ForceUnits=s, UIMin = "0.01", UIMax = "1"))
 	float WarmupTickDelta;
 
 	FNiagaraSystemInstanceControllerPtr SystemInstanceController;
@@ -165,7 +167,7 @@ private:
 	//~ Begin UActorComponent Interface.
 protected:
 	virtual void OnRegister() override;
-	virtual void OnUnregister() override; 
+	virtual void OnUnregister() override;
 	virtual void ApplyWorldOffset(const FVector& InOffset, bool bWorldShift) override;
 	virtual void OnEndOfFrameUpdateDuringTick() override;
 	virtual void CreateRenderState_Concurrent(FRegisterComponentContext* Context) override;
@@ -212,7 +214,6 @@ public:
 	bool IsComplete() const;
 
 private:
-
 	//Internal versions that can be called from the scalability code.
 	//These will behave as expected but will keep the component registered with the scalability manager.
 	void ActivateInternal(bool bReset, bool bIsScalabilityCull);
@@ -227,8 +228,8 @@ private:
 	void OnSystemComplete(bool bExternalCompletion);
 
 public:
-
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType,
+	                           FActorComponentTickFunction* ThisTickFunction) override;
 	virtual const UObject* AdditionalStatObject() const override;
 	virtual bool IsReadyForOwnerToAutoDestroy() const override;
 	virtual void OnComponentDestroyed(bool bDestroyingHierarchy) override;
@@ -240,8 +241,11 @@ public:
 	virtual int32 GetNumMaterials() const override;
 	virtual FBoxSphereBounds CalcBounds(const FTransform& LocalToWorld) const override;
 	virtual FPrimitiveSceneProxy* CreateSceneProxy() override;
-	virtual void GetUsedMaterials(TArray<UMaterialInterface*>& OutMaterials, bool bGetDebugMaterials = false) const override;
-	virtual void GetStreamingRenderAssetInfo(FStreamingTextureLevelContext& LevelContext, TArray<FStreamingRenderAssetPrimitiveInfo>& OutStreamingRenderAssets) const override;
+	virtual void GetUsedMaterials(TArray<UMaterialInterface*>& OutMaterials,
+	                              bool bGetDebugMaterials = false) const override;
+	virtual void GetStreamingRenderAssetInfo(FStreamingTextureLevelContext& LevelContext,
+	                                         TArray<FStreamingRenderAssetPrimitiveInfo>& OutStreamingRenderAssets)
+	const override;
 	virtual void OnAttachmentChanged() override;
 	//~ End UPrimitiveComponent Interface
 
@@ -251,7 +255,9 @@ public:
 	virtual bool IsVisible() const override;
 	//~ Begin USceneComponent Interface
 
-	UE_DEPRECATED(5.0, "This interface is no longer safe to access directly. Use the interface provided by GetSystemInstanceController instead.")
+	UE_DEPRECATED(
+		5.0,
+		"This interface is no longer safe to access directly. Use the interface provided by GetSystemInstanceController instead.")
 	TSharedPtr<FNiagaraSystemSimulation, ESPMode::ThreadSafe> GetSystemSimulation();
 
 	bool InitializeSystem();
@@ -275,13 +281,13 @@ public:
 	void SetForceSolo(bool bInForceSolo);
 
 	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Is In Forced Solo Mode"))
-	bool GetForceSolo()const { return bForceSolo; }
+	bool GetForceSolo() const { return bForceSolo; }
 
 private:
 	bool RequiresSoloMode() const;
 	void UpdateInstanceSoloMode();
-public:
 
+public:
 	UFUNCTION(BlueprintCallable, Category = Niagara)
 	void SetGpuComputeDebug(bool bEnableDebug);
 
@@ -332,13 +338,15 @@ public:
 	/** Gets whether or not the delta time used to tick the system instance when using desired age is locked to the seek delta.  When true, the system instance
 	will only be ticked when the desired age has changed by more than the seek delta.  When false the system instance will be ticked by the change in desired
 	age when not seeking. */
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Get whether or not to lock the desired age delta time to the seek delta."))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Get whether or not to lock the desired age delta time to the seek delta."))
 	bool GetLockDesiredAgeDeltaTimeToSeekDelta() const;
 
 	/** Sets whether or not the delta time used to tick the system instance when using desired age is locked to the seek delta.  When true, the system instance
 	will only be ticked when the desired age has changed by more than the seek delta.  When false the system instance will be ticked by the change in desired
 	age when not seeking. */
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set whether or not to lock the desired age delta time to the seek delta."))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set whether or not to lock the desired age delta time to the seek delta."))
 	void SetLockDesiredAgeDeltaTimeToSeekDelta(bool bLock);
 
 	/**
@@ -360,7 +368,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Auto Destroy"))
 	void SetAutoDestroy(bool bInAutoDestroy);
 
-	UE_DEPRECATED(5.0, "This interface is no longer safe to access directly. Use the interface provided by GetSystemInstanceController instead.")
+	UE_DEPRECATED(
+		5.0,
+		"This interface is no longer safe to access directly. Use the interface provided by GetSystemInstanceController instead.")
 	FNiagaraSystemInstance* GetSystemInstance() const;
 
 	FNiagaraSystemInstanceControllerPtr GetSystemInstanceController() { return SystemInstanceController; }
@@ -419,119 +429,157 @@ public:
 	int32 GetRandomSeedOffset() const { return RandomSeedOffset; }
 
 	/** Sets a Niagara FLinearColor parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (LinearColor)", Keywords="user parameter variable color"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (LinearColor)", Keywords="user parameter variable color"))
 	void SetNiagaraVariableLinearColor(const FString& InVariableName, const FLinearColor& InValue);
 
 	/** Sets a Niagara FLinearColor parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (LinearColor)", Keywords="user parameter variable color"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (LinearColor)", Keywords="user parameter variable color"))
 	void SetVariableLinearColor(FName InVariableName, const FLinearColor& InValue);
 
 	/** Sets a Niagara Vector4 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Vector4)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Vector4)", Keywords="user parameter variable vector"))
 	void SetNiagaraVariableVec4(const FString& InVariableName, const FVector4& InValue);
 
 	/** Sets a Niagara Vector4 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Vector4)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Vector4)", Keywords="user parameter variable vector"))
 	void SetVariableVec4(FName InVariableName, const FVector4& InValue);
 
 	/** Sets a Niagara quaternion parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Quaternion)", Keywords="user parameter variable quaternion rotation"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Quaternion)", Keywords=
+			"user parameter variable quaternion rotation"))
 	void SetNiagaraVariableQuat(const FString& InVariableName, const FQuat& InValue);
 
 	/** Sets a Niagara quaternion parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Quaternion)", Keywords="user parameter variable quaternion rotation"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Quaternion)", Keywords=
+			"user parameter variable quaternion rotation"))
 	void SetVariableQuat(FName InVariableName, const FQuat& InValue);
 
 	/** Sets a Niagara matrix parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Matrix)", Keywords="user parameter variable matrix"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Matrix)", Keywords="user parameter variable matrix"))
 	void SetNiagaraVariableMatrix(const FString& InVariableName, const FMatrix& InValue);
 
 	/** Sets a Niagara matrix parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Matrix)", Keywords="user parameter variable matrix"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Matrix)", Keywords="user parameter variable matrix"))
 	void SetVariableMatrix(FName InVariableName, const FMatrix& InValue);
 
 	/** Sets a Niagara Vector3 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Vector3)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Vector3)", Keywords="user parameter variable vector"))
 	void SetNiagaraVariableVec3(const FString& InVariableName, FVector InValue);
 
 	/** Sets a Niagara Vector3 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Vector3)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Vector3)", Keywords="user parameter variable vector"))
 	void SetVariableVec3(FName InVariableName, FVector InValue);
 
 	/** Sets a Niagara Position parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Position)", Keywords="user parameter variable vector position lwc"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Position)", Keywords=
+			"user parameter variable vector position lwc"))
 	void SetNiagaraVariablePosition(const FString& InVariableName, FVector InValue);
 
 	/** Sets a Niagara Position parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Position)", Keywords="user parameter variable vector position lwc"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Position)", Keywords="user parameter variable vector position lwc"
+		))
 	void SetVariablePosition(FName InVariableName, FVector InValue);
 
 	/** Sets a Niagara Vector2 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Vector2)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Vector2)", Keywords="user parameter variable vector"))
 	void SetNiagaraVariableVec2(const FString& InVariableName, FVector2D InValue);
 
 	/** Sets a Niagara Vector2 parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Vector2)", Keywords="user parameter variable vector"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Vector2)", Keywords="user parameter variable vector"))
 	void SetVariableVec2(FName InVariableName, FVector2D InValue);
 
 	/** Sets a Niagara float parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Float)", Keywords="user parameter variable float"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Float)", Keywords="user parameter variable float"))
 	void SetNiagaraVariableFloat(const FString& InVariableName, float InValue);
 
 	/** Sets a Niagara float parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Float)", Keywords="user parameter variable float"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Float)", Keywords="user parameter variable float"))
 	void SetVariableFloat(FName InVariableName, float InValue);
 
 	/** Sets a Niagara int parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Int32)", Keywords="user parameter variable int"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Int32)", Keywords="user parameter variable int"))
 	void SetNiagaraVariableInt(const FString& InVariableName, int32 InValue);
 
 	/** Sets a Niagara int parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Int32)", Keywords="user parameter variable int"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Int32)", Keywords="user parameter variable int"))
 	void SetVariableInt(FName InVariableName, int32 InValue);
 
 	/** Sets a Niagara bool parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Bool)", Keywords="user parameter variable bool"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Bool)", Keywords="user parameter variable bool"))
 	void SetNiagaraVariableBool(const FString& InVariableName, bool InValue);
 
 	/** Sets a Niagara bool parameter by name, overriding locally if necessary.*/
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Bool)", Keywords="user parameter variable bool"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Bool)", Keywords="user parameter variable bool"))
 	void SetVariableBool(FName InVariableName, bool InValue);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Actor)", Keywords="user parameter variable actor"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Actor)", Keywords="user parameter variable actor"))
 	void SetNiagaraVariableActor(const FString& InVariableName, AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Actor)", Keywords="user parameter variable actor"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Actor)", Keywords="user parameter variable actor"))
 	void SetVariableActor(FName InVariableName, AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable By String (Object)", Keywords="user parameter variable object"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable By String (Object)", Keywords="user parameter variable object"))
 	void SetNiagaraVariableObject(const FString& InVariableName, UObject* Object);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Object)", Keywords="user parameter variable object"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Object)", Keywords="user parameter variable object"))
 	void SetVariableObject(FName InVariableName, UObject* Object);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Material)", Keywords="user parameter variable material"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Material)", Keywords="user parameter variable material"))
 	void SetVariableMaterial(FName InVariableName, UMaterialInterface* Object);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Static Mesh)", Keywords="user parameter variable mesh"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Static Mesh)", Keywords="user parameter variable mesh"))
 	void SetVariableStaticMesh(FName InVariableName, UStaticMesh* InValue);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (Texture)", Keywords="user parameter variable texture"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (Texture)", Keywords="user parameter variable texture"))
 	void SetVariableTexture(FName InVariableName, class UTexture* Texture);
 
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Set Niagara Variable (TextureRenderTarget)"))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Set Niagara Variable (TextureRenderTarget)"))
 	void SetVariableTextureRenderTarget(FName InVariableName, class UTextureRenderTarget* TextureRenderTarget);
 
 	/** Debug accessors for getting positions in blueprints. */
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Get Niagara Emitter Positions", DeprecatedFunction, DeprecationMessage = "Get Niagara Emitter Positions is deprecated, use the particle export DI inside your emitter instead."))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Get Niagara Emitter Positions", DeprecatedFunction, DeprecationMessage =
+			"Get Niagara Emitter Positions is deprecated, use the particle export DI inside your emitter instead."))
 	TArray<FVector> GetNiagaraParticlePositions_DebugOnly(const FString& InEmitterName);
 
 	/** Debug accessors for getting a float attribute array in blueprints.  The attribute name should be without namespaces. For example for "Particles.Position", send "Position". */
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Get Niagara Emitter Float Attrib", DeprecatedFunction, DeprecationMessage = "Get Niagara Emitter Float Attrib is deprecated, use the particle export DI inside your emitter instead."))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Get Niagara Emitter Float Attrib", DeprecatedFunction, DeprecationMessage =
+			"Get Niagara Emitter Float Attrib is deprecated, use the particle export DI inside your emitter instead."))
 	TArray<float> GetNiagaraParticleValues_DebugOnly(const FString& InEmitterName, const FString& InValueName);
 
 	/** Debug accessors for getting a FVector attribute array in blueprints. The attribute name should be without namespaces. For example for "Particles.Position", send "Position". */
-	UFUNCTION(BlueprintCallable, Category = Niagara, meta = (DisplayName = "Get Niagara Emitter Vec3 Attrib", DeprecatedFunction, DeprecationMessage = "Get Niagara Emitter Vec3 Attrib is deprecated, use the particle export DI inside your emitter instead."))
+	UFUNCTION(BlueprintCallable, Category = Niagara,
+		meta = (DisplayName = "Get Niagara Emitter Vec3 Attrib", DeprecatedFunction, DeprecationMessage =
+			"Get Niagara Emitter Vec3 Attrib is deprecated, use the particle export DI inside your emitter instead."))
 	TArray<FVector> GetNiagaraParticleValueVec3_DebugOnly(const FString& InEmitterName, const FString& InValueName);
 
 	/** Resets the System to it's initial pre-simulated state. */
@@ -563,9 +611,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Niagara)
 	bool IsPaused() const;
 
-	UE_DEPRECATED(4.27, "This method will be removed in a future release. Use the method provided by the Niagara Function Library instead.")
+	UE_DEPRECATED(
+		4.27,
+		"This method will be removed in a future release. Use the method provided by the Niagara Function Library instead.")
 	UFUNCTION(BlueprintCallable, Category = Niagara)
-	UNiagaraDataInterface* GetDataInterface(const FString &Name);
+	UNiagaraDataInterface* GetDataInterface(const FString& Name);
 
 	/**
 		The significant index for this component. i.e. this is the Nth most significant instance of it's system in the scene.
@@ -577,7 +627,8 @@ public:
 	virtual void Serialize(FStructuredArchive::FRecord Record) override;
 	virtual void PostLoad() override;
 #if WITH_EDITORONLY_DATA
-	static void DeclareConstructClasses(TArray<FTopLevelAssetPath>& OutConstructClasses, const UClass* SpecificSubclass);
+	static void DeclareConstructClasses(TArray<FTopLevelAssetPath>& OutConstructClasses,
+	                                    const UClass* SpecificSubclass);
 #endif
 
 #if WITH_EDITOR
@@ -611,11 +662,10 @@ public:
 	void SetPreviewLODDistance(bool bEnablePreviewLODDistance, float PreviewLODDistance, float PreviewMaxDistance);
 
 	UFUNCTION(BlueprintCallable, Category = Preview, meta = (Keywords = "preview LOD Distance scalability"))
-	FORCEINLINE bool GetPreviewLODDistanceEnabled()const;
+	FORCEINLINE bool GetPreviewLODDistanceEnabled() const;
 
 	UFUNCTION(BlueprintCallable, Category = Preview, meta = (Keywords = "preview LOD Distance scalability"))
-	FORCEINLINE float GetPreviewLODDistance()const;
-
+	FORCEINLINE float GetPreviewLODDistance() const;
 	/**
 	Initializes this component for capturing a performance baseline.
 	This will do things such as disabling distance culling and setting a LODDistance of 0 to ensure the effect is at it's maximum cost.
@@ -629,7 +679,10 @@ public:
 	void PostLoadNormalizeOverrideNames();
 	FOnSystemInstanceChanged& OnSystemInstanceChanged() { return OnSystemInstanceChangedDelegate; }
 
-	FOnSynchronizedWithAssetParameters& OnSynchronizedWithAssetParameters() { return OnSynchronizedWithAssetParametersDelegate; }
+	FOnSynchronizedWithAssetParameters& OnSynchronizedWithAssetParameters()
+	{
+		return OnSynchronizedWithAssetParametersDelegate;
+	}
 #endif
 
 	FNiagaraUserRedirectionParameterStore& GetOverrideParameters() { return OverrideParameters; }
@@ -648,7 +701,7 @@ public:
 	void SetUserParametersToDefaultValues();
 
 	/** Is this an effect on or linked to the local player. */
-	bool IsLocalPlayerEffect()const;
+	bool IsLocalPlayerEffect() const;
 
 private:
 	/** Compare local overrides with the source System. Remove any that have mismatched types or no longer exist on the System.*/
@@ -678,7 +731,8 @@ public:
 	 * If null during registration, we assign the existing AttachParent and defer attachment until we activate.
 	 * @see bAutoManageAttachment
 	 */
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category=Attachment, meta=(EditCondition="bAutoManageAttachment"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category=Attachment,
+		meta=(EditCondition="bAutoManageAttachment"))
 	TWeakObjectPtr<USceneComponent> AutoAttachParent;
 
 	/**
@@ -719,7 +773,8 @@ public:
 	 * @param  ScaleRule		Option for how we handle our scale when we attach to Parent.
 	 * @see bAutoManageAttachment, AutoAttachParent, AutoAttachSocketName, AutoAttachLocationRule, AutoAttachRotationRule, AutoAttachScaleRule
 	 */
-	void SetAutoAttachmentParameters(USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule) override;
+	void SetAutoAttachmentParameters(USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule,
+	                                 EAttachmentRule RotationRule, EAttachmentRule ScaleRule) override;
 
 	virtual void SetUseAutoManageAttachment(bool bAutoManage) override { bAutoManageAttachment = bAutoManage; }
 
@@ -760,30 +815,30 @@ public:
 	/** Set whether this component is allowed to perform scalability checks and potentially be culled etc. Occasionally it is useful to disable this for specific components. E.g. Effects on the local player. */
 	UFUNCTION(BlueprintSetter, Category = Scalability, meta = (Keywords = "LOD scalability"))
 	void SetAllowScalability(bool bAllow);
-	
+
 	UFUNCTION(BlueprintGetter)
-	bool GetAllowScalability()const;
-	
+	bool GetAllowScalability() const;
+
 	UFUNCTION(BlueprintSetter, Category = Scalability, meta = (Keywords = "LOD scalability"))
 	void SetForceLocalPlayerEffect(bool bIsPlayerEffect);
-	
+
 	UFUNCTION(BlueprintGetter)
-	bool GetForceLocalPlayerEffect()const;
+	bool GetForceLocalPlayerEffect() const;
 
-	FORCEINLINE bool IsRegisteredWithScalabilityManager()const { return ScalabilityManagerHandle != INDEX_NONE; }
-	FORCEINLINE int32 GetScalabilityManagerHandle()const { return ScalabilityManagerHandle; }
+	FORCEINLINE bool IsRegisteredWithScalabilityManager() const { return ScalabilityManagerHandle != INDEX_NONE; }
+	FORCEINLINE int32 GetScalabilityManagerHandle() const { return ScalabilityManagerHandle; }
 
-	FORCEINLINE void BeginUpdateContextReset(){ bDuringUpdateContextReset = true; }
-	FORCEINLINE void EndUpdateContextReset(){ bDuringUpdateContextReset = false; }
+	FORCEINLINE void BeginUpdateContextReset() { bDuringUpdateContextReset = true; }
+	FORCEINLINE void EndUpdateContextReset() { bDuringUpdateContextReset = false; }
 
-#if WITH_NIAGARA_DEBUGGER	
+#if WITH_NIAGARA_DEBUGGER
 	//Cache our scalability state in the component so we have access to it easily and also after it has been removed from the scalability manager.
 	FNiagaraScalabilityState DebugCachedScalabilityState;
 #endif
 
-	FORCEINLINE bool IsUsingCullProxy()const { return CullProxy != nullptr; }
+	FORCEINLINE bool IsUsingCullProxy() const { return CullProxy != nullptr; }
 
-	bool ResolveOwnerAllowsScalability(bool bRegister=true);
+	bool ResolveOwnerAllowsScalability(bool bRegister = true);
 
 private:
 	/** Did we try and activate but fail due to the asset being not yet ready. Keep looping.*/
@@ -850,5 +905,9 @@ public:
 	FParticlePerfStatsContext GetPerfStatsContext();
 };
 
-FORCEINLINE bool UNiagaraComponent::GetPreviewLODDistanceEnabled()const { return bEnablePreviewLODDistance; }
-FORCEINLINE float UNiagaraComponent::GetPreviewLODDistance()const { return bEnablePreviewLODDistance ? PreviewLODDistance : 0.0f; }
+FORCEINLINE bool UNiagaraComponent::GetPreviewLODDistanceEnabled() const { return bEnablePreviewLODDistance; }
+FORCEINLINE float UNiagaraComponent::GetPreviewLODDistance() const
+
+{
+	return bEnablePreviewLODDistance ? PreviewLODDistance : 0.0f;
+}

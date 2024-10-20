@@ -213,6 +213,10 @@ public:
 	FVector LastUpdateRequestedVelocity;
 	int32 NumJumpApexAttempts;
 	FVector AnimRootMotionVelocity;
+	float FallingSpeedOutSide;
+	float FallingSpeedZOutSide;
+	float FallingAcccelOutSide;
+	float FallingSpeedRotY;
 	bool bShouldApplyDeltaToMeshPhysicsTransforms; // See UpdateBasedMovement
 	FVector DeltaPosition;
 	FQuat DeltaQuat;

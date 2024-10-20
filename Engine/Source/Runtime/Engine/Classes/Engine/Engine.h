@@ -390,7 +390,7 @@ struct FWorldContext
 
 	UPROPERTY()
 	TArray<struct FLevelStreamingStatus> PendingLevelStreamingStatusUpdates;
-
+	
 	UPROPERTY()
 	TObjectPtr<class UGameViewportClient> GameViewport;
 
@@ -1373,10 +1373,22 @@ public:
 	FSoftObjectPath LightMapDensityTextureName;
 
 	// Variables.
+	
+	UPROPERTY()
+	TObjectPtr<class UTexture> ProtanopiaTexture;
 
+	UPROPERTY()
+	TObjectPtr<class UTexture> DeuteranopiaTexture;
+
+	UPROPERTY()
+	TObjectPtr<class UTexture> TritanopiaTexture;
+
+	UPROPERTY()
+	TObjectPtr<class UTexture> AchromatopsiaTexture;
+	
 	/** Engine loop, used for callbacks from the engine module into launch. */
 	class IEngineLoop* EngineLoop;
-
+	
 	/** The view port representing the current game instance. Can be 0 so don't use without checking. */
 	UPROPERTY()
 	TObjectPtr<class UGameViewportClient> GameViewport;

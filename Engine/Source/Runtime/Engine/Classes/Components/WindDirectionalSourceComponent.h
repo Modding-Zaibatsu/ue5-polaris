@@ -42,9 +42,16 @@ class ENGINE_API UWindDirectionalSourceComponent : public USceneComponent
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = WindDirectionalSourceComponent)
 	uint32 bPointWind : 1;
 
-public:
-	FWindSourceSceneProxy* SceneProxy;
+	
+	
 
+public:
+	
+	FWindSourceSceneProxy* SceneProxy;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = Polaris)
+	int32 Group;
+	
 	/**
 	 * Because the actual data used to query wind is stored on the render thread in
 	 * an instance of FWindSourceSceneProxy all of our properties are read only.

@@ -370,7 +370,7 @@ public:
 	UPROPERTY()
 	USlateAccessibleWidgetData::FGetText AccessibleSummaryTextDelegate;
 #endif
-
+	
 protected:
 
 	/**
@@ -386,6 +386,19 @@ protected:
 	uint8 bIsManagedByGameViewportSubsystem:1;
 
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Polaris")
+	uint8 bBehindCharacter:1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Polaris")
+	uint8 bNoBlendingHDR:1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Polaris")
+	uint8 bCustomPosition:1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Polaris")
+	uint8 bNoColorAccessibility:1;
+	
 #if WITH_EDITORONLY_DATA
 	/** Stores the design time flag setting if the widget is hidden inside the designer */
 	UPROPERTY()

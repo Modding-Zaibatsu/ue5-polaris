@@ -2660,7 +2660,7 @@ public:
 	{
 		return RootMotionParams.bHasRootMotion;
 	}
-
+	
 	// Takes component space root motion and converts it to world space
 	FTransform ConvertLocalRootMotionToWorld(const FTransform& InLocalRootMotion, float DeltaSeconds);
 
@@ -2709,6 +2709,19 @@ protected:
 	void UpdateDefaultAvoidance();
 
 public:
+
+	UPROPERTY()
+	float FallingSpeedOutSide;
+
+	UPROPERTY()
+	float FallingSpeedZOutSide;
+
+	UPROPERTY()
+	float FallingAcccelOutSide;
+
+	UPROPERTY()
+	float FallingSpeedRotY;
+	
 	/** lock avoidance velocity */
 	void SetAvoidanceVelocityLock(class UAvoidanceManager* Avoidance, float Duration);
 

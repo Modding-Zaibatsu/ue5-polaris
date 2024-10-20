@@ -45,6 +45,9 @@ class ENGINE_API URadialForceComponent : public USceneComponent
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Destructible)
 	float DestructibleDamage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Polaris)
+	float Height;
+
 	/** Fire a single impulse */
 	UFUNCTION(BlueprintCallable, Category="Physics|Components|RadialForce")
 	virtual void FireImpulse();
